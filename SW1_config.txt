@@ -1,0 +1,60 @@
+! ══════════════════════════════════════════════════════════
+! CONFIGURACIÓN SWITCH SW1
+! Proyecto : DHCP Starvation Attack
+! Autor    : Raelina Ferrera | Matrícula: 2021-2371
+! Curso    : Seguridad en Redes — ITLA
+! ══════════════════════════════════════════════════════════
+
+enable
+configure terminal
+
+hostname SW1
+
+! ── VLAN ──
+vlan 23
+ name VLAN_23
+ exit
+
+! ── Trunk hacia R1 (e0/0 del switch) ──
+interface Ethernet0/0
+ description Trunk-to-R1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport trunk allowed vlan 23
+ no shutdown
+ exit
+
+! ── Access hacia Windows (víctima) ──
+interface Ethernet0/1
+ description Access-to-Win-Victim
+ switchport mode access
+ switchport access vlan 23
+ spanning-tree portfast
+ no shutdown
+ exit
+
+! ── Access hacia Linux (atacante) ──
+interface Ethernet0/2
+ description Access-to-Linux-Attacker
+ switchport mode access
+ switchport access vlan 23
+ spanning-tree portfast
+ no shutdown
+ exit
+
+! ── Puerto no usado — apagado ──
+interface Ethernet0/3
+ description Unused-Port
+ shutdown
+ exit
+
+end
+write memory
+
+! ══════════════════════════════════════════════════════════
+! VERIFICACIÓN:
+!   show vlan brief                 ← estado de VLANs
+!   show interfaces trunk           ← estado trunk
+!   show spanning-tree vlan 23      ← topología STP
+!   show mac address-table          ← tabla MAC (se llenará con el ataque)
+! ══════════════════════════════════════════════════════════
