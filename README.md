@@ -96,9 +96,10 @@ El atacante envía tramas **BPDU de Configuración** con una **prioridad de brid
   Priority: 0        DHCP
   MAC:aa:bb:cc...  10.21.23.XX
 
-<img width="482" height="365" alt="image" src="https://github.com/user-attachments/assets/102588b0-0ff9-45ea-b476-9d3ea4d568d3" />
 
 ```
+<img width="482" height="365" alt="image" src="https://github.com/user-attachments/assets/48301e90-f48e-4bc8-9dcf-363ab7eec56f" />
+
 
 **Antes del ataque:** SW1 es Root Bridge (priority 4096).  
 **Después del ataque:** Linux (priority 0) es reconocido como Root Bridge.
